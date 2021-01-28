@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-    
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,10 +16,9 @@
 <body>
 	<div id="wrap">
 
-
-
 		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 		<!-- header + nav -->
+		
 
 		<div id="aside">
 			<h2>회원</h2>
@@ -32,27 +33,26 @@
 		<div id="content">
 			
 			<div id="content-head">
-            	<h3>회원가입</h3>
+            	<h3>회원정보</h3>
             	<div id="location">
             		<ul>
             			<li>홈</li>
             			<li>회원</li>
-            			<li class="last">회원가입</li>
+            			<li class="last">회원정보</li>
             		</ul>
             	</div>
                 <div class="clear"></div>
             </div>
-            <!-- //content-head -->
+             <!-- //content-head -->
 
 			<div id="user">
-				<div id="joinForm">
-					<form action="${pageContext.request.contextPath}/user/join" method="get">
+				<div id="modifyForm">
+					<form action="${pageContext.request.contextPath}/user/modify" method="post">
 
 						<!-- 아이디 -->
 						<div class="form-group">
 							<label class="form-text" for="input-uid">아이디</label> 
-							<input type="text" id="input-uid" name="id" value="" placeholder="아이디를 입력하세요">
-							<button type="button" id="">중복체크</button>
+							<span class="text-large bold">${ahthUser.id }</span>
 						</div>
 
 						<!-- 비밀번호 -->
@@ -79,32 +79,25 @@
 
 						</div>
 
-						<!-- 약관동의 -->
-						<div class="form-group">
-							<span class="form-text">약관동의</span> 
-							
-							<input type="checkbox" id="chk-agree" value="" name="">
-							<label for="chk-agree">서비스 약관에 동의합니다.</label> 
-						</div>
-						
 						<!-- 버튼영역 -->
 		                <div class="button-area">
-		                    <button type="submit" id="btn-submit">회원가입</button>
+		                    <button type="submit" id="btn-submit">회원정보수정</button>
 		                </div>
 						
 					</form>
+				
+				
 				</div>
-				<!-- //joinForm -->
+				<!-- //modifyForm -->
 			</div>
 			<!-- //user -->
 		</div>
 		<!-- //content  -->
 		<div class="clear"></div>
 		
-		
 		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 		<!-- //footer -->
-
+		
 	</div>
 	<!-- //wrap -->
 
