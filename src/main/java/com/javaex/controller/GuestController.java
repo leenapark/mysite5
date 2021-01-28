@@ -73,7 +73,7 @@ public class GuestController {
 		} else {
 			System.out.println("삭제 실패");
 			
-			return "redirect:/guest/deleteForm?result=fail&no="+guestVo.getNo();
+			return "redirect:/guest/deleteForm?no="+guestVo.getNo();
 		}
 	}
 }
