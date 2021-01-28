@@ -27,8 +27,24 @@ public class UserDao {
 		System.out.println("userDao select: " + userVo.toString());
 		
 		UserVo vo = sqlSession.selectOne("user.selectUser", userVo);
-				
+		
 		return vo;
+	}
+	
+	// 수정할 정보 보내기
+	public UserVo selectUser(int no) {
+		System.out.println("userDao select: " + no);
+		
+		UserVo vo = sqlSession.selectOne("user.getUser", no);
+		
+		return vo;
+	}
+	
+	// 수정
+	public int userUpdate(UserVo userVo) {
+		System.out.println("userDao update: " + userVo);
+		
+		return sqlSession.update("user.update", userVo);
 	}
 	
 }
