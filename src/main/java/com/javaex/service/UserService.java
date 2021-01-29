@@ -20,12 +20,14 @@ public class UserService {
 		return userDao.insert(userVo);	
 	}
 	
+	// 로그인
 	public UserVo login(UserVo userVo) {
 		System.out.println("userService login");
 		
 		return userDao.selectUser(userVo);
 	}
 	
+	// 정보 수정 폼
 	public UserVo mForm(int no) {
 		System.out.println("userService mForm");
 		
@@ -33,6 +35,7 @@ public class UserService {
 		
 	}
 	
+	// 정보 수정
 	public int modify(UserVo userVo) {
 		System.out.println("userService modify");
 		
