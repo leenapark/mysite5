@@ -25,6 +25,7 @@
 	    ]]>
 	</select>
 
+	<!-- 방명록 등록 -->
 	<insert id="insert" parameterType="GuestVo">
 	    <![CDATA[
 	    	insert into guestbook
@@ -36,6 +37,7 @@
 	    ]]>
 	</insert>
 
+	<!-- 방명록 삭제 -->
 	<delete id="delete" parameterType="GuestVo">
 	    <![CDATA[
 	    	delete guestbook

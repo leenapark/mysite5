@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	<resultMap id="resultMapBoardVo" type="com.javaex.vo.BoardVo">
+		<result column="no" property="no" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="hit" property="hit" />
+		<result column="regDate" property="regDate" />
+		<result column="user_no" property="userNo" />
+		<result column="name" property="name" />
+	</resultMap>
+	
+	<!-- 쿼리문 작성 -->
+	<!-- 전체 리스트 가져오기 resultMap -->
+	<select id="selectList" resultMap="resultMapBoardVo">
+	    <![CDATA[
+			select  b.no,
+			        b.title,
+			        b.content,
+			        b.hit,
+			        to_char(b.reg_date, 'yyyy-mm-dd') regDate,
+			        b.user_no userNo,
+			        u.name,
+			        u.id
+			from board b, users u
+			where u.no=user_no
+			order by b.no desc
+	    ]]>
+	</select>
+	
+	<!-- 게시글 가져오기 -->
+	<select id="selectBoard" parameterType="int" resultType="BoardVo">
+	    <![CDATA[
+	    	 select b.no,
+			        b.title,
+			        b.content,
+			        b.hit,
+			        to_char(b.reg_date, 'yyyy-mm-dd') regDate,
+			        b.user_no userNo,
+			        u.name
+			from board b, users u
+			where b.user_no = u.no
+			and b.no = #{no}
+	    ]]>
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="hitUp" parameterType="int">
+		<![CDATA[
+			update board
+			set hit = hit+1
+			where no = #{no}
+	    ]]>
+	</update>
+	
+	<!-- 게시글 수정 -->
+	<update id="update" parameterType="GuestVo">
+		<![CDATA[
+			update board
+			set title = #{title},
+				content = #{content}
+			where no = #{no}
+	    ]]>
+	</update>
+	
+	<!-- 게시글 등록(저장) -->
+	<insert id="insert" parameterType="GuestVo">
+		<![CDATA[
+			insert into board
+			VALUES(seq_board_no.nextval,
+					#{title},
+					#{content},
+					default,
+					sysdate,
+					#{userNo})
+	    ]]>
+	</insert>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="delete">
+		<![CDATA[
+			delete from board
+			where no = #{no}
+	    ]]>	
+	</delete>
+	
+</mapper>
