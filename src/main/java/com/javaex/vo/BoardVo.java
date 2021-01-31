@@ -11,6 +11,7 @@ public class BoardVo {
 	private String regDate;
 	private int userNo;
 	private String name;
+	private String str;
 	
 	// 생성자	
 	public BoardVo() {
@@ -40,7 +41,17 @@ public class BoardVo {
 		this.userNo = userNo;
 		this.name = name;
 	}
-
+	
+	public BoardVo(int no, String title, int hit, String regDate, int userNo, String name, String str) {
+		super();
+		this.no = no;
+		this.title = title;
+		this.hit = hit;
+		this.regDate = regDate;
+		this.userNo = userNo;
+		this.name = name;
+		this.str = str;
+	}
 
 	/**************Dao getRead 생성자**********/
 	public BoardVo(int no, String title, String content, int hit, String regDate, int userNo, String name) {
@@ -126,8 +137,16 @@ public class BoardVo {
 		this.name = name;
 	}
 	
-	// 메소드 일반
+	public String getStr() {
+		return str;
+	}
 
+	public void setStr(String str) {
+		this.str = str;
+	}
+	
+	
+	// 메소드 일반
 
 	@Override
 	public String toString() {
