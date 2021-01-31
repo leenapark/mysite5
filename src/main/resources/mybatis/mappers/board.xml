@@ -16,7 +16,7 @@
 	
 	<!-- 쿼리문 작성 -->
 	<!-- 전체 리스트 가져오기 resultMap -->
-	<select id="selectList" resultMap="resultMapBoardVo">
+	<select id="selectList" parameterType="map" resultType="BoardVo">
 	    <![CDATA[
 			select  b.no,
 			        b.title,
@@ -27,9 +27,23 @@
 			        u.name,
 			        u.id
 			from board b, users u
-			where u.no=user_no
-			order by b.no desc
+			where u.no = b.user_no
 	    ]]>
+	    <choose>
+		    <when test="str!=null">
+				<![CDATA[
+					and (b.title like '%'||#{str}||'%'
+					or u.name like '%'||#{str}||'%'
+					or b.reg_date like #{str})
+					order by no desc
+			   ]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					order by b.no desc
+			   ]]>
+			</otherwise>
+	    </choose>
 	</select>
 	
 	<!-- 게시글 가져오기 -->
@@ -87,5 +101,7 @@
 			where no = #{no}
 	    ]]>	
 	</delete>
+	
+	
 	
 </mapper>
