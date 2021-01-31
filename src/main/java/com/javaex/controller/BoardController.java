@@ -28,11 +28,13 @@ public class BoardController {
 	
 	
 	// 게시판 리스트
-	@RequestMapping(value="/list", method= {RequestMethod.GET, RequestMethod.POST})
-	public String list(Model model) {
-		System.out.println("list");
+	@RequestMapping(value="/main", method= {RequestMethod.GET, RequestMethod.POST})
+	public String listSearch(Model model, @RequestParam(value="str", required=false) String str) {
+		System.out.println("list");		
 		
-		List<BoardVo> boardList = boardService.list();
+		System.out.println("controller str: " + str);
+		
+		List<BoardVo> boardList = boardService.listSearch(str);
 		model.addAttribute("boardList", boardList);
 		
 		return "/board/list";
@@ -104,4 +106,5 @@ public class BoardController {
 		
 		return "redirect:/board/list";
 	}
+	
 }
