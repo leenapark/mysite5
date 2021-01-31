@@ -18,10 +18,10 @@ public class BoardService {
 	
 	
 	// 게시판 리스트
-	public List<BoardVo> list() {
-		System.out.println("service list");
+	public List<BoardVo> listSearch(String str) {
+		System.out.println("service list: " + str);
 		
-		List<BoardVo> boardList = boardDao.getList();
+		List<BoardVo> boardList = boardDao.getList(str);
 		
 		return boardList;
 	}
