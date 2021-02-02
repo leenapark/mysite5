@@ -67,16 +67,23 @@
 							</tr>
 							<c:forEach items="${rboardList }" var="RboardVo">
 								<tr>
-									<td>${RboardVo.no }</td>
+									<td>${RboardVo.no }</td>									
+									<c:choose>
+									<c:when test="${RboardVo.depth == 0}">
 									<td class="text-left"><a href="${pageContext.request.contextPath}/rboard/post?no=${RboardVo.no }">${RboardVo.title }</a></td>
+									</c:when>
+									<c:when test="${RboardVo.depth == 1}">
+										<td class="text-left"><a href="${pageContext.request.contextPath}/rboard/post?no=${RboardVo.no }">&nbsp; re: ${RboardVo.title }</a></td>
+									</c:when>
+									<c:when test="${RboardVo.depth == 2}">
+										<td class="text-left"><a href="${pageContext.request.contextPath}/rboard/post?no=${RboardVo.no }"> &nbsp; &nbsp; re: re: ${RboardVo.title }</a></td>
+									</c:when>
+									</c:choose>
 									<td>${RboardVo.name }</td>
 									<td>${RboardVo.hit }</td>
 									<td>${RboardVo.regDate }</td>
 									<td><c:if test="${authUser.no == RboardVo.userNo }"><a href="${pageContext.request.contextPath}/rboard/delete?no=${RboardVo.no}">[삭제]</a></c:if></td>
 								</tr>
-								<input type="text" name="groupNo" value="groupNo ${RboardVo.no }">
-								<input type="text" name="orderNo" value="orderNo ${RboardVo.orderNo }">
-								<input type="text" name="depth" value="depth ${RboardVo.depth }">
 							</c:forEach>
 						</tbody>
 					</table>

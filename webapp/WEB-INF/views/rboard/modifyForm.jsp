@@ -22,6 +22,7 @@
 		<c:import url="/WEB-INF/views/include/aside.jsp"></c:import>
 		<!-- //aside -->
 
+
 		<div id="content">
 
 			<div id="content-head">
@@ -38,51 +39,46 @@
 			<!-- //content-head -->
 
 			<div id="board">
-				<div id="read">
-					<form action="${pageContext.request.contextPath}/rboard/post" method="get">
+				<div id="modifyForm">
+					<form action="${pageContext.request.contextPath}/rboard/modify" method="get">
 						<!-- 작성자 -->
 						<div class="form-group">
 							<span class="form-text">작성자</span>
-							<span class="form-value">${rpostVo.name }</span>
+							<span class="form-value">${rboardVo.name }</span>
 						</div>
 						
 						<!-- 조회수 -->
 						<div class="form-group">
 							<span class="form-text">조회수</span>
-							<span class="form-value">${rpostVo.hit }</span>
+							<span class="form-value">${rboardVo.hit }</span>
 						</div>
 						
 						<!-- 작성일 -->
 						<div class="form-group">
 							<span class="form-text">작성일</span>
-							<span class="form-value">${rpostVo.regDate }</span>
+							<span class="form-value">${rboardVo.regDate }</span>
 						</div>
 						
 						<!-- 제목 -->
 						<div class="form-group">
-							<span class="form-text">제 목</span>
-							<span class="form-value">${rpostVo.title }</span>
+							<label class="form-text" for="txt-title">제목</label>
+							<input type="text" id="txt-title" name="title" value="${rboardVo.title }">
 						</div>
 					
+						
+					
 						<!-- 내용 -->
-						<div id="txt-content">
-							<span class="form-value" >
-								${rpostVo.content }
-							</span>
+						<div class="form-group">
+							<textarea id="txt-content" name="content">${rboardVo.content }</textarea>
 						</div>
-						<c:if test="${rpostVo.userNo == authUser.no }">
-							<a id="btn_modify" href="${pageContext.request.contextPath}/rboard/modifyForm?no=${rpostVo.no}">수정</a>
-						</c:if>
-						<c:if test="${authUser != null }">
-							<a id="btn_modify" href="${pageContext.request.contextPath}/rboard/rewriteForm?no=${rpostVo.no}">답글</a>
-						</c:if>
 						
-						<a id="btn_modify" href="${pageContext.request.contextPath}/rboard/list">목록</a>
-						
+						<a id="btn_cancel" href="${pageContext.request.contextPath}/rboard/post?no=${rboardVo.no}">취소</a>
+						<button id="btn_modify" type="submit" >수정</button>
+						<input type="text" name="no" value="${rboardVo.no }">
 					</form>
 	                <!-- //form -->
 				</div>
-				<!-- //read -->
+				<!-- //modifyForm -->
 			</div>
 			<!-- //board -->
 		</div>
