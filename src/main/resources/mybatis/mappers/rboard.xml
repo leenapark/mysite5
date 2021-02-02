@@ -8,7 +8,7 @@
 	
 	<!-- 쿼리문 작성 -->
 	<!-- 전체 리스트 불러오기 -->
-	<select id="selectList" resultType="RboardVo">
+	<select id="selectList" parameterType="map" resultType="RboardVo">
 	    <![CDATA[
 	    	select  r.no,
 			        r.user_no userNo,
@@ -22,8 +22,22 @@
 			        r.depth
 			from rboard r, users u
 			where r.user_no = u.no
-			order by r.no desc
 	    ]]>
+	     <choose>
+		    <when test="str!=null">
+				<![CDATA[
+					and (r.title like '%'||#{str}||'%'
+					or u.name like '%'||#{str}||'%'
+					or r.reg_date like #{str})
+					order by groupNo desc, orderNo asc
+			   ]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					order by groupNo desc, orderNo asc
+			   ]]>
+			</otherwise>
+	    </choose>
 	</select>
 	
 	<!-- 선택한 게시글 가져오기 -->
@@ -56,7 +70,7 @@
 	
 	
 	<!-- 게시글 등록 (저장) -->
-	<insert id="insert">
+	<insert id="insert" parameterType="RboardVo">
 	    <![CDATA[
 	    	insert into rboard
 			values(seq_rboard_no.nextval,
@@ -72,7 +86,7 @@
 	    ]]>
 	</insert>
 	
-		<insert id="insert">
+	<insert id="reinsert" parameterType="RboardVo">
 	    <![CDATA[
 	    	insert into rboard
 			values(seq_rboard_no.nextval,
@@ -81,22 +95,41 @@
 			        #{content},
 			        default,
 			        sysdate,
-			        seq_rboard_no.nextval,
-			        default + 1,
-			        default + 1
+			        #{groupNo},
+			        #{orderNo} + 1,
+			        #{depth} + 1
 			    )
 	    ]]>
 	</insert>
 	
 	
 	<!-- 게시글 쿼리 수정 -->
-	<update id="reUpdate" parameterType="int">
+	<update id="reUpdate" parameterType="RboardVo">
 		<![CDATA[
 			update rboard
-			set order_no = order_no+1,
-				depth = depth+1
+			set order_no = order_no+1
+			where group_no = #{groupNo}
+			and order_no > #{orderNo}
+	    ]]>
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="delete">
+		<![CDATA[
+			delete from rboard
+			where no = #{no}
+	    ]]>	
+	</delete>
+	
+	<!-- 게시글 수정 -->
+	<update id="update" parameterType="RboardVo">
+		<![CDATA[
+			update rboard
+			set title = #{title},
+				content = #{content}
 			where no = #{no}
 	    ]]>
 	</update>
+	
 	
 </mapper>

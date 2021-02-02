@@ -16,7 +16,7 @@
 	
 	<!-- 쿼리문 작성 -->
 	<!-- 전체 리스트 가져오기 resultMap -->
-	<select id="selectList" parameterType="map" resultType="BoardVo">
+	<select id="selectList" parameterType="map" resultMap="resultMapBoardVo">
 	    <![CDATA[
 			select  b.no,
 			        b.title,
@@ -72,7 +72,7 @@
 	</update>
 	
 	<!-- 게시글 수정 -->
-	<update id="update" parameterType="GuestVo">
+	<update id="update" parameterType="BoardVo">
 		<![CDATA[
 			update board
 			set title = #{title},
@@ -82,7 +82,7 @@
 	</update>
 	
 	<!-- 게시글 등록(저장) -->
-	<insert id="insert" parameterType="GuestVo">
+	<insert id="insert" parameterType="BoardVo">
 		<![CDATA[
 			insert into board
 			VALUES(seq_board_no.nextval,
