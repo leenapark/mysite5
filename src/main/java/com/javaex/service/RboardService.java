@@ -19,10 +19,10 @@ public class RboardService {
 	//메소드
 	
 	// 전체 리스트 가져오기
-	public List<RboardVo> getList() {
+	public List<RboardVo> getList(String str) {
 		System.out.println("service list");
 		
-		List<RboardVo> rbList = rboardDao.getList();
+		List<RboardVo> rbList = rboardDao.getList(str);
 		
 		return rbList;
 	}
@@ -53,11 +53,33 @@ public class RboardService {
 		}
 	}
 	
-	public void reWrite(RboardVo rboardVo) {
+	// 답게시글 작성
+	public int reWrite(RboardVo rboardVo) {
 		System.out.println("service reWrite: " + rboardVo.toString());
 		
-		rboardDao.insert(rboardVo);
-		
+		return rboardDao.reInsert(rboardVo);
 		
 	}
+	
+	// 게시글 삭제
+	public int delete(int no) {
+		System.out.println("service delete: " + no);
+		
+		return rboardDao.delete(no);
+	}
+	
+	// 게시글 수정 폼
+	public RboardVo modifyForm(int no) {
+		System.out.println("service modifyForm: " + no);
+		
+		return rboardDao.getPost(no);
+	}
+	
+	// 게시글 수정
+	public int modify(RboardVo rboardVo) {
+		System.out.println("service modify: " + rboardVo.toString());
+		
+		return rboardDao.update(rboardVo);
+	}
+	
 }
