@@ -33,6 +33,14 @@ public class BoardDao {
 		return boardList;
 	}
 	
+	// 조회수 증가
+	public int hitUp(int no) {
+		System.out.println("dao hit");
+		
+		
+		return sqlSession.update("board.hitUp", no);
+	}
+	
 	// 선택한 게시물 읽기
 	public BoardVo getPost(int no) {
 		System.out.println("dao read: " + no);
@@ -43,12 +51,6 @@ public class BoardDao {
 		return boardVo;
 	}
 	
-	// 조회수 증가
-	public int hitUp(int no) {
-		System.out.println("dao hit");
-		
-		return sqlSession.update("board.hitUp", no);
-	}
 	
 	// 게시글 수정
 	public int update(BoardVo boardVo) {

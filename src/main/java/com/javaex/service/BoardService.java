@@ -34,7 +34,10 @@ public class BoardService {
 		
 		if(authUser==null||authUser.getNo() != boardVo.getUserNo()) {
 			
+			
 			boardDao.hitUp(no);
+			int hit = boardVo.getHit()+1;
+			boardVo.setHit(hit);
 			
 			return boardVo;
 		} else {
