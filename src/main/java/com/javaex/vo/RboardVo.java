@@ -26,7 +26,6 @@ public class RboardVo {
 	private int orderNo;
 	/**답글 계층**/
 	private int depth;
-	/****/
 
 	
 	// 생성자
