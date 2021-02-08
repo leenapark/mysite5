@@ -47,4 +47,13 @@ public class UserDao {
 		return sqlSession.update("user.update", userVo);
 	}
 	
+	// 회원가입 - id check
+	public UserVo selectOne(String id) {
+		System.out.println("userDao idcheck: " + id);
+		
+		return sqlSession.selectOne("user.selectById", id);
+		//System.out.println(userVo.toString());
+		
+	}
+	
 }

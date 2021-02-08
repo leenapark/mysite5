@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.UserService;
 import com.javaex.vo.UserVo;
@@ -124,8 +126,39 @@ public class UserController {
 		
 		return "redirect:/";
 		
-		
 	}
 	
+	// 회원가입 - id check
+	/*
+	@RequestMapping(value="/idcheck", method = {RequestMethod.GET, RequestMethod.POST})
+	public String idcheck(@RequestParam("id") String id) {
+		System.out.println("/user/idcheck: " + id);
+		
+		UserVo userVo = userService.idcheck(id);
+		System.out.println("controller: " + userVo);
+		
+		String result = "";
+		
+		if(userVo == null) {
+			result = "can";
+		} else {
+			result = "cant";			
+		}
+		
+		//redirect:/user/joinForm?result="+result=can&name=황일영&password=1234&gender=male";
+		return "redirect:/user/joinForm?result="+result;
+	}
+	*/
+	@ResponseBody
+	@RequestMapping(value="/idcheck", method = {RequestMethod.GET, RequestMethod.POST})
+	public String idcheck(@RequestParam("id") String id, @RequestParam("password") String pw) {
+		System.out.println("/user/idcheck: " + id + ", " + pw);
+		
+		String result = userService.idcheck(id);
+		System.out.println("controller: " + result);
+	
+		//return "redirect:/user/joinForm?result="+result;
+		return result;	//데이터만 리턴 해줄 때 @ResponseBody 사용 --> 데이터만 response의 body 영역에 데이터만 보낸다
+	}
 	
 }

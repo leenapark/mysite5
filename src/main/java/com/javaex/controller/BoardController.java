@@ -42,6 +42,7 @@ public class BoardController {
 	
 	// 글 읽기
 	@RequestMapping(value="/post", method= {RequestMethod.GET, RequestMethod.POST})
+	/*
 	public String postread(HttpSession session, @RequestParam("no") int no) {
 		System.out.println("post");
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
@@ -55,6 +56,21 @@ public class BoardController {
 		return "/board/read";
 		
 	}
+	*/
+	public String postread(HttpSession session, @RequestParam("no") int no) {
+		System.out.println("post");
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		//authUser 값이 null 이면 tostring으로 확인 불가
+		
+		BoardVo boardVo = boardService.postread(no, authUser);
+		System.out.println("controller read: " + boardVo);
+		
+		session.setAttribute("postVo", boardVo);
+		
+		return "/board/read";
+		
+	}
+	
 	
 	// 수정 폼
 	@RequestMapping(value="/modifyForm", method= {RequestMethod.GET, RequestMethod.POST})

@@ -42,5 +42,20 @@ public class UserService {
 		return userDao.userUpdate(userVo);
 	}
 
-
+	// 회원 가입 - 아이디 체크
+	public String idcheck(String id) {
+		UserVo userVo = userDao.selectOne(id);	
+		
+		String result = "";
+		
+		System.out.println("userService idcheck: " + id);
+		
+		if(userVo == null) {
+			result = "can";
+		} else {
+			result = "cant";			
+		}
+		
+		return result;
+	}
 }
