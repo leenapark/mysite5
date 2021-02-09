@@ -43,4 +43,21 @@ public class GuestDao {
 		return count;
 	}
 	
+	
+	// ajax 방명록 저장(selectkey)
+	public void insertSelectKey(GuestVo guestVo) {
+		System.out.println("Dao insertSelectKey");
+		
+		System.out.println("Dao insertSelectKey 실행 전: " + guestVo);
+		sqlSession.insert("guest.insertSelectKey", guestVo);
+		System.out.println("Dao insertSelectKey 실행 후: " + guestVo);
+	}
+	
+	// 방명록 선택한 글 가져오기
+	public GuestVo selectOne(int no) {
+		System.out.println("Dao selectOne");
+		
+		return sqlSession.selectOne("guest.select", no);
+	}
+	
 }

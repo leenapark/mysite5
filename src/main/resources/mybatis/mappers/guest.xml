@@ -45,5 +45,33 @@
 			and password = #{password}
 	    ]]>
 	</delete>
+	
+	<!-- ajax 방명록 저장 -->
+	<insert id="insertSelectKey" parameterType="com.javaex.vo.GuestVo">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select seq_no.nextval from dual
+		</selectKey>
+		
+		<![CDATA[
+			insert into guestbook
+			values( #{no}, 
+					#{name},
+					#{password},
+					#{content},
+					sysdate
+			)
+		]]>
+	</insert>
 
+	
+	<select id="select" parameterType="int" resultType="com.javaex.vo.GuestVo">
+		<![CDATA[
+			select  no,
+			        name,
+			        content,
+			        reg_date regDate
+			from guestbook
+			where no = #{no}
+		]]>
+	</select>
 </mapper>

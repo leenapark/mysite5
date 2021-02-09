@@ -1,22 +1,19 @@
 package com.javaex.controller;
 
-import java.security.Timestamp;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javaex.service.GuestService;
 import com.javaex.vo.GuestVo;
 
 @Controller
-@RequestMapping(value="/guest")
+@RequestMapping(value="/guestbook")
 public class GuestController {
 
 	//필드
@@ -75,5 +72,14 @@ public class GuestController {
 			
 			return "redirect:/guest/deleteForm?no="+guestVo.getNo();
 		}
+	}
+	
+	
+	// ajaxList
+	@RequestMapping(value="/ajaxList", method= {RequestMethod.GET, RequestMethod.POST})
+	public String ajaxList() {
+		System.out.println("guestController ajaxList");
+		
+		return "guestbook/ajaxList";
 	}
 }
