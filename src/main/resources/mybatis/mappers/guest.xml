@@ -19,7 +19,7 @@
 	        		name,
 	        		password,
 	        		content,
-	        		to_date(reg_date, 'YYYY-MM-DD HH:MI:SS') regDate
+	        		reg_date regDate
 			from guestbook
 			order by no desc
 	    ]]>

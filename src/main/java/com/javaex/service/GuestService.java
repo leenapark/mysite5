@@ -40,8 +40,9 @@ public class GuestService {
 		return count;
 	}
 	
+	
+	// 방명록 저장
 	public GuestVo writeResultVo(GuestVo guestVo) {
-		// 방명록 저장
 		
 		System.out.println("guestService 실행 전: " + guestVo);
 		guestDao.insertSelectKey(guestVo);
