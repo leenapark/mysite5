@@ -33,6 +33,40 @@ public class BoardDao {
 		return boardList;
 	}
 	
+	// 게시판 리스트 (검색 기능 포함)
+	public List<BoardVo> selectList2(String keyword) {
+		System.out.println("Dao selectList2: " + keyword);
+		
+		List<BoardVo> boardVo = sqlSession.selectList("board.selectList2", keyword);
+		
+		return boardVo;
+	}
+	
+	// 게시판 리스트 (검색 기능 + 페이징 포함)
+	public List<BoardVo> selectList3(String keyword, int startRnum, int endRnum) {
+		System.out.println("Dao selectList3");
+		
+		// key word, startRnum, endRnum
+		// 1회성이기 때문에 Map으로 묶어준다
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("keyword", keyword);
+		map.put("startRnum", startRnum);
+		map.put("endRnum", endRnum);
+		System.out.println("map: " + map);
+		
+		List<BoardVo> boardVo = sqlSession.selectList("board.selectList3", map);
+		
+		return boardVo;
+	}
+	
+	// 페이징 전체 페이지 갯수 구하기
+	public int selectTotalcnt(String keyword) {
+		System.out.println("Dao selectTotalcnt");
+		
+		return sqlSession.selectOne("board.selectTotalcnt", keyword);
+	}
+	
+	
 	// 조회수 증가
 	public int hitUp(int no) {
 		System.out.println("dao hit");
@@ -72,5 +106,6 @@ public class BoardDao {
 		
 		return sqlSession.delete("board.delete", no);
 	}
+	
 	
 }

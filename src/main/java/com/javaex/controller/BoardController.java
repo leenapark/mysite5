@@ -1,6 +1,7 @@
 package com.javaex.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -28,7 +29,7 @@ public class BoardController {
 	
 	
 	// 게시판 리스트
-	@RequestMapping(value="/main", method= {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="/list", method= {RequestMethod.GET, RequestMethod.POST})
 	public String listSearch(Model model, @RequestParam(value="str", required=false) String str) {
 		System.out.println("list");		
 		
@@ -39,6 +40,37 @@ public class BoardController {
 		
 		return "/board/list";
 	}
+	
+	// 게시판 리스트2 - 검색 기능 포함
+	@RequestMapping(value="/list2", method= {RequestMethod.GET, RequestMethod.POST})
+	public String list2(@RequestParam(value="keyword", required=false, defaultValue="") String keyword, Model model) {
+		System.out.println("controller list: " + keyword);
+		
+		List<BoardVo> boardVo = boardService.getBoardList2(keyword);
+		
+		System.out.println(boardVo);
+		
+		model.addAttribute("boardList", boardVo);
+		
+		return "/board/list2";
+	}
+	
+	// 게시판 리스트3 - 검색 기능 + 페이징 포함
+		@RequestMapping(value="/list3", method= {RequestMethod.GET, RequestMethod.POST})
+		public String list3(@RequestParam(value="keyword", required=false, defaultValue="") String keyword, Model model,
+							@RequestParam(value="crtPage", required = false, defaultValue="1") int crtPage) {
+			System.out.println("controller list: " + keyword + ", " + crtPage);
+			
+			
+			Map<String, Object> pMap = boardService.getBoardList3(keyword, crtPage);
+			
+			System.out.println(pMap);
+			
+			model.addAttribute("pMap", pMap);
+			
+			return "/board/list3";
+		}
+	
 	
 	// 글 읽기
 	@RequestMapping(value="/post", method= {RequestMethod.GET, RequestMethod.POST})
