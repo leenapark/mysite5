@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gallery">
+	<resultMap id="resultMapgalleryVo" type="com.javaex.vo.GalleryVo">
+		<result column="no" property="no" />
+		<result column="user_no" property="userNo" />
+		<result column="content" property="content" />
+		<result column="orgName" property="orgName" />
+		<result column="saveName" property="saveName" />
+		<result column="fileSize" property="fileSize" />
+	</resultMap>
+
+	<!-- 쿼리문 작성 -->
+
+	<!-- 전체 리스트 가져오기 resultMap -->
+	<select id="selectList" resultMap="resultMapgalleryVo">
+	    <![CDATA[
+	        select  no,
+			        user_no userNo,
+			        content,
+			        filePath,
+			        orgName,
+			        saveName,
+			        fileSize
+			from gallery
+			order by no desc
+	    ]]>
+	</select>
+	
+
+
+</mapper>

@@ -99,7 +99,7 @@
 			                from board b, users u
 			                where b.user_no = u.no
 		]]>             
-						<if test=" value != null and value != '' ">
+						<if test=" keyword != null and keyword != '' ">
 							<![CDATA[
 								and (b.title like '%'||#{keyword}||'%'
 								or u.name like '%'||#{keyword}||'%'
