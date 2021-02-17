@@ -24,4 +24,26 @@ public class GalleryDao {
 		return vo;
 	}
 	
+	// 갤러리 등록(db 저장)
+	public int insert(GalleryVo galleryVo) {
+		System.out.println("GalleryDao insert: " + galleryVo);
+		
+		return sqlSession.insert("gallery.insert", galleryVo);
+		
+	}
+	
+	// 한개 선택하기
+	public GalleryVo selectOne(String saveName) {
+		System.out.println("GalleryDao selectOne: " + saveName);
+		
+		return sqlSession.selectOne("gallery.selectOne", saveName);
+	}
+	
+	// 데이터 삭제
+	public int delete(int no) {
+		System.out.println("GalleryDao delete");
+		
+		return sqlSession.delete("gallery.delete", no);		
+	}
+	
 }

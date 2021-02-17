@@ -9,7 +9,9 @@ public class GalleryVo {
 	private String filePath;
 	private String orgName;
 	private String saveName;
-	private int fileSize;
+	private long fileSize;
+	private String userName;
+	
 
 	
 	// 생성자
@@ -18,7 +20,7 @@ public class GalleryVo {
 
 
 	public GalleryVo(int no, int userNo, String content, String filePath, String orgName, String saveName,
-			int fileSize) {
+			long fileSize, String userName) {
 		this.no = no;
 		this.userNo = userNo;
 		this.content = content;
@@ -26,7 +28,9 @@ public class GalleryVo {
 		this.orgName = orgName;
 		this.saveName = saveName;
 		this.fileSize = fileSize;
+		this.userName = userName;
 	}
+
 
 	// 메소드 g/s
 
@@ -90,23 +94,32 @@ public class GalleryVo {
 	}
 
 
-	public int getFileSize() {
+	public long getFileSize() {
 		return fileSize;
 	}
 
 
-	public void setFileSize(int fileSize) {
+	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
 
 	
-	
+	public String getUserName() {
+		return userName;
+	}
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	// 메소드 일반
-	
+
 	@Override
 	public String toString() {
 		return "GalleryVo [no=" + no + ", userNo=" + userNo + ", content=" + content + ", filePath=" + filePath
-				+ ", orgName=" + orgName + ", saveName=" + saveName + ", fileSize=" + fileSize + "]";
+				+ ", orgName=" + orgName + ", saveName=" + saveName + ", fileSize=" + fileSize + ", userName="
+				+ userName + "]";
 	}	
 	
 	

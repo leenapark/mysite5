@@ -9,6 +9,7 @@
 		<result column="orgName" property="orgName" />
 		<result column="saveName" property="saveName" />
 		<result column="fileSize" property="fileSize" />
+		<result column="name" property="userName" />
 	</resultMap>
 
 	<!-- 쿼리문 작성 -->
@@ -16,18 +17,61 @@
 	<!-- 전체 리스트 가져오기 resultMap -->
 	<select id="selectList" resultMap="resultMapgalleryVo">
 	    <![CDATA[
-	        select  no,
-			        user_no userNo,
-			        content,
-			        filePath,
-			        orgName,
-			        saveName,
-			        fileSize
-			from gallery
-			order by no desc
+	        select  g.no,
+			        g.user_no userNo,
+			        g.content,
+			        g.filePath,
+			        g.orgName,
+			        g.saveName,
+			        g.fileSize,
+			        u.name
+			from gallery g, users u
+			where g.user_no = u.no
+			order by g.no desc
 	    ]]>
 	</select>
 	
-
-
+	<!-- 갤러리 등록(저장) -->
+	<insert id="insert">
+	    <![CDATA[
+	    	insert into gallery
+			values(
+					seq_gallery_no.nextval,
+					#{userNo},
+					#{content},
+					#{filePath},
+					#{orgName},
+					#{saveName},
+					#{fileSize}
+					)
+	    ]]>
+	</insert>
+	
+	<!-- 데이터 한개 가져오기 -->
+	<select id="selectOne" parameterType="String" resultMap="resultMapgalleryVo">
+	    <![CDATA[
+	       select   g.no,
+			        g.user_no userNo,
+			        g.content,
+			        g.filePath,
+			        g.orgName,
+			        g.saveName,
+			        g.fileSize,
+			        u.name
+			from gallery g, users u
+			where g.user_no = u.no
+			and saveName = #{saveName}
+			order by g.no desc
+	    ]]>
+	</select>
+	
+	
+	<!-- 데이터 삭제 -->
+	<delete id="delete" parameterType="int">
+	    <![CDATA[
+	    	delete from gallery
+			where no = #{no}
+	    ]]>
+	</delete>
+	
 </mapper>

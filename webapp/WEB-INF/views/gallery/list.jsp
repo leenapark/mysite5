@@ -48,22 +48,26 @@
 			<div id="gallery">
 				<div id="list">
 			
-					
+					<c:if test="${authUser.no != null }">
 						<button id="btnImgUpload">이미지올리기</button>
 						<div class="clear"></div>
-
+					</c:if>
 			
 					<ul id="viewArea">
 						
 						<!-- 이미지반복영역 -->
-							<li>
+							<c:forEach items="${galleryList }" var="galleryVo">
+							<li data-savename="${galleryVo.saveName }"
+								data-no="${galleryVo.no }"
+								id="gVo${galleryVo.no }">
 								<div class="view" >
-									<c:forEach items="${galleryList }" var="galleryVo">
+									
 										<img class="imgItem" src="${pageContext.request.contextPath }/upload/${galleryVo.saveName}">
-										<div class="imgWriter">작성자: <strong>유재석</strong></div>
-									</c:forEach>
+										<div class="imgWriter">작성자: <strong>${galleryVo.userName }</strong></div>
+																
 								</div>
 							</li>
+							</c:forEach>
 						<!-- 이미지반복영역 -->
 						
 						
@@ -93,7 +97,7 @@
 					<h4 class="modal-title">이미지등록</h4>
 				</div>
 				
-				<form method="${pageContext.request.contextPath }/gallery/upload" action="post" >
+				<form method="post" action="${pageContext.request.contextPath }/gallery/upload" enctype="multipart/form-data">
 					<div class="modal-body">
 						<div class="form-group">
 							<label class="form-text">글작성</label>
@@ -107,6 +111,7 @@
 					<div class="modal-footer">
 						<button type="submit" class="btn" id="btnUpload">등록</button>
 					</div>
+					<input type="text" name="userNo" value="${authUser.no }">
 				</form>
 				
 				
@@ -127,7 +132,7 @@
 				<div class="modal-body">
 					
 					<div class="formgroup" >
-						<img id="viewModelImg" src =""> <!-- ajax로 처리 : 이미지출력 위치-->
+						<img id="viewModelImg" src ="#"> <!-- ajax로 처리 : 이미지출력 위치-->
 					</div>
 					
 					<div class="formgroup">
@@ -135,14 +140,15 @@
 					</div>
 					
 				</div>
-				<form method="" action="">
+				<!-- <form method="" action=""> -->
 					<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+
 					<button type="button" class="btn btn-danger" id="btnDel">삭제</button>
+
 				</div>
 				
-				
-				</form>
+				<!-- </form> -->
 				
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
@@ -152,12 +158,111 @@
 </body>
 
 <script type="text/javascript">
+	// 사진 올리기 버튼 클릭했을 때
+	$("#btnImgUpload").on("click", function(){
+		event.preventDefault();
+		
+		console.log("사진 올리기 버튼 클릭");
+		
+		$("#addModal").modal();
+		
+	});
 
+	// 사진 클릭 했을 때
+	$("#viewArea").on("click", "li", function(){
 
+		console.log("사진 클릭");
+		
+		//var saveName = $("[name=saveName]").val();
+		
+		var saveName = $(this).data("savename");
+		var result = "${pageContext.request.contextPath }/upload/"+ saveName;
+		console.log(result);
+		
+		 var no = $(this).data("no");
+	     console.log("no" + no);
+		
+		
+		$("#viewModelImg").attr("src", result);  
+		 
+		var authUserNo = $("[name=userNo]").val();
 
+		
+		$("#viewModal").modal();
+		
+		// 이미지 출력 ajax
+		$.ajax({
+			
+			url : "${pageContext.request.contextPath }/gallery/post",		
+			type : "post",
+			//contentType : "application/json",
+			data : {saveName: saveName},
+			
+			
+			dataType : "json",
+			success : function(galleryVo){
+				/*성공시 처리해야될 코드 작성*/
+				console.log("성공");
+				console.log(galleryVo);				
+				
+				// 내용 영역
+				$("#viewModelContent").text(galleryVo.content);
+				
+				
+				var userNo = galleryVo.userNo;
+				//console.log("userNo" + userNo);
+				
+				if(authUserNo != userNo){
+					$("#btnDel").hide();
+				} 
+
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
+		// 삭제 버튼을 클릭했을 때
+	    $("#btnDel").on("click", function(){
+		       console.log("삭제 버튼 클릭");
+		      
+		       console.log(no);
+		       
+		       $.ajax({
+		   		
+			   		url : "${pageContext.request.contextPath }/gallery/remove",		
+			   		type : "post",
+			   		//contentType : "application/json",
+			   		data : {no: no},
+		
+			   		dataType : "json",
+			   		success : function(count){
+			   			/*성공시 처리해야될 코드 작성*/
+			   			console.log("성공")
+			   			
+			   			$("#viewModal").modal("hide");
+			   			
+					    console.log("성공 no: " + no);
+			   			
+						$("#gVo" + no).remove();
+
+			   		},
+			   		error : function(XHR, status, error) {
+			   			console.error(status + " : " + error);
+			   		}
+			   	});
+	      
+	       
+		  });
+		
+	});
+
+	
+
+		
+	
 </script>
-
-
 
 
 </html>

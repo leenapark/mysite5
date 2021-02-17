@@ -322,7 +322,7 @@
 		str += '		<td>'+ guestVo.no +'</td>';
 		str += '		<td>'+ guestVo.name +'</td>';
 		str += '		<td>'+ guestVo.regDate +'</td>';
-		str += '		<td><a href="" data-no="' + guestVo.no +'">[삭제]</a></td>';
+		str += '		<td><a href=""data-no="' + guestVo.no +'">[삭제]</a></td>';
 		str += '	</tr>';
 		str += '	<tr>';
 		str += '		<td colspan=4 class="text-left">'+ guestVo.content +'</td>';

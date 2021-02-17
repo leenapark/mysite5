@@ -30,8 +30,8 @@ public class GalleryService {
 		return galleryDao.galleryList();		
 	}
 	
-	public String restore(MultipartFile file) {
-		System.out.println("FileUploadService: " + file.getOriginalFilename());
+	public String restore(MultipartFile file, GalleryVo galleryVo) {
+		System.out.println("GalleryService: " + file.getOriginalFilename());
 		
 		// db 저장할 정보 수집
 		String saveDir = "C:\\javaStudy\\upload";
@@ -73,10 +73,32 @@ public class GalleryService {
 		}
 		
 		// db 저장
-		Map<String, Object> map = new HashMap<String, Object>();
+		//Map<String, Object> map = new HashMap<String, Object>();
 		//map.put("", value);
+		galleryVo.setFilePath(filePath);
+		galleryVo.setFileSize(fileSize);
+		galleryVo.setOrgName(orgName);
+		galleryVo.setSaveName(saveName);
+		
+		System.out.println("GalleryService: " + galleryVo);
+		
+		galleryDao.insert(galleryVo);
 		
 		return saveName;
+	}
+	
+	// 데이터 하나 가져오기
+	public GalleryVo selectOne(String savaName) {
+		System.out.println("GalleryService: " + savaName);
+		
+		return galleryDao.selectOne(savaName);		
+	}
+	
+	// 데이터 삭제
+	public int remove(int no) {
+		System.out.println("GalleryService remove");
+		
+		return galleryDao.delete(no);
 	}
 	
 }
